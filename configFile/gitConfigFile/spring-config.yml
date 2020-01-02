@@ -1,21 +1,26 @@
 ﻿server:
-  port: 8085
+  port: 8083
 spring:
   application:
     name: springcloudconfig
   #git配置中心
   cloud:
     config:
+#      profile: dev                      # 指定profile
+      label: master                     # 指定gitlab仓库的分支
       server:
         git:
           #  配置文件只搜索url目录下的searchPaths
-          uri: git@github.com:chenliang1991625/springcloud-config.git
+          #git仓库
+          uri: https://github.com/chenliang1991625/springcloud-config.git
+          #gitlab仓库
+#          uri: https://git.lug.ustc.edu.cn/jc-spring-cloud/spring-config.git
           # 指定搜索路径，如果有多个路径则使用,分隔
           searchPaths: configFile/gitConfigFile
           # 对于使用git,svn做为后端配置，从远程库获取配置文件，需要存储到本地文件
-          basedir: D:\360Download\config
+#          basedir: D:\360Download\config
           # 配置中心通过git从远程git库，有时本地的拷贝被污染，这时配置中心无法从远程库更新本地配置,设置force-pull=true，则强制从远程库中更新本地库
-          force-pull: true
+#          force-pull: true
           username: chenliang1991625
           password: cl1991625
 eureka:
@@ -25,4 +30,4 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
   client:
     service-url:
-      defaultZone: http://localhost:8082/eureka/
+      defaultZone: http://192.168.1.8:8082/eureka/

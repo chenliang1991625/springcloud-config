@@ -2,8 +2,13 @@ server:
   port: 8084
 spring:
   application:
-    name: springItem
-
+    name: spring-test-item
+  thymeleaf:
+    cache: true
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
 #eureka client config
 eureka:
   instance:
@@ -12,5 +17,5 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
   client:
     service-url:
-      defaultZone: http://localhost:8082/eureka/
+      defaultZone: http://192.168.1.8:8082/eureka/
 

@@ -1,0 +1,41 @@
+﻿# 定义阶段
+stages:
+  - build
+  - push
+  - run
+  - clean
+#   下面是每个阶段的具体工作
+#   构建镜像
+build:
+  stage: build
+  script:
+    - /usr/local/maven/apache-maven-3.5.3/bin/mvn clean package
+    - cp target/springcloud-config-0.0.1-SNAPSHOT.jar docker
+    - cd docker
+    - docker build -t 192.168.1.8:5000/springcloud-config:v0.0.1 .
+#   上传到docker私有镜像仓库
+push:
+  stage: push
+  script:
+    - docker push 192.168.1.8:5000/springcloud-config:v0.0.1
+ # 运行docker容器(启动项目)
+run:
+  stage: run
+  script:
+    - cd docker
+    - docker-compose down
+    - docker-compose up -d
+#   清理
+clean:
+  stage: clean
+  script:
+#    清除虚悬镜像
+    - docker image prune -f
+
+
+#stages:
+#  - test
+#test:
+#  stage: test
+#  script:
+#    - echo "use gitlab-runner实现持续集成test succeed!陈亮hello world!!!"

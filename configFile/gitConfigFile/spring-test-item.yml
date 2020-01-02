@@ -1,7 +1,12 @@
 server:
   port: 8084
 spring:
-  profiles: dev
+  cloud:
+    config:
+      label: master
+#      profie: dev
+  profiles:
+    active: dev #一定加上才能激活相应环境
   application:
     name: spring-test-item
   thymeleaf:
@@ -22,7 +27,7 @@ eureka:
 ---
 #spring-cloud-config-client //idea中模块的配置文件
 server:
-  port: 8074
+  port: 8084
 spring:
   profiles: test
   application:
@@ -33,7 +38,7 @@ eureka:
       defaultZone: http://192.168.1.8:8082/eureka/
 ---
 server:
-  port: 8064
+  port: 8084
 spring:
   profiles: prod
   application:
